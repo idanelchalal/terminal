@@ -5,6 +5,9 @@ const cors = require('cors')
 const app = express()
 app.use(express.json())
 
+// FLIGHTS QUEUE
+const queue = []
+
 // DAL
 mongoConnect(Config.connectionString, async () => {
     await app.listen(Config.PORT, () =>
