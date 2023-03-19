@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const schema = mongoose.Schema({
-    flightId: mongoose.Types.ObjectId,
     isDeparture: { required: true, type: Boolean },
     // passengersCount: {
     //     type: Number,
