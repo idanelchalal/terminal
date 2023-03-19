@@ -1,5 +1,5 @@
 const express = require('express')
-const mongoConnect = require('./dal')
+const mongoConnect = require('./dal/dal')
 const cors = require('cors')
 
 const app = express()
