@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const schema = mongoose.Schema({
     isDeparture: { required: true, type: Boolean },
+    landed: { required: true, default: false, type: Boolean },
     // passengersCount: {
     //     type: Number,
     //     required: true,
