@@ -1,16 +1,17 @@
 const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
-const mongoConnect = (connectionString, callback) => {
-    mongoose
-        .connect(connectionString)
-        .then((client) => {
-            console.log('Connected to database!')
-            callback()
-        })
-        .catch((err) => {
-            console.log(err)
-            throw err
-        })
+const mongoConnect = async (connectionString, callback) => {
+    const client = await mongoose.connect(connectionString)
+
+    if (callback) callback(client)
+
+    // const client = await mongoose.connect(connectionString, {
+    //     useNewUrlParser: true,
+    //     useUnifiedTopology: true,
+    // })
+    // if (callback) callback()
+    // console.log(client)
+    // return client.client
 }
 
 module.exports = mongoConnect
