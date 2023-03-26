@@ -1,15 +1,38 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import Flight from './components/Flight'
 import io from 'socket.io-client'
 
 const socket = io('http://localhost:3001')
 
 function App() {
-    const [landed, setLanded] = useState({})
-    const [departure, setDeparture] = useState({})
+    const landed = []
+    const departure = []
+    const [inAir, setInAir] = useState([])
 
     useEffect(() => {
-        socket.on('message', (context) => {})
+        socket.on('message', ({ action, payload }) => {
+            if (action === 'newFlight') {
+                console.log(payload)
+            }
+
+            if (action === 'flightCompleted') {
+            }
+        })
     }, [])
+
+    let inAirContent = 'No flights are in air right now...'
+    if (inAir.length > 0) {
+        inAirContent = inAir.map((flight) => (
+            <li className="flight">
+                <Flight
+                    key={flight.flightId}
+                    phase={flight.phase}
+                    flightId={flight.flightId}
+                    isDeparture={flight.settings.isDeparure}
+                />
+            </li>
+        ))
+    }
 
     return (
         <>
@@ -22,12 +45,16 @@ function App() {
                 </nav>
                 <article>
                     <section>
-                        <h1 className="text-align-center">Landed:</h1>
-                        <ul></ul>
+                        <h1 className="text-align-center">FLIGHTS ON AIR</h1>
+                        <ul>{inAirContent}</ul>
                     </section>
                     <section>
                         <h1 className="text-align-center">Departure:</h1>
-                        <ul></ul>
+                        {}
+                    </section>
+                    <section>
+                        <h1 className="text-align-center">Departure:</h1>
+                        {}
                     </section>
                 </article>
             </div>

@@ -11,6 +11,7 @@ let currentLeg
 let nextLeg
 let movingFlight
 let currentPhase
+let isNewFlight = false
 
 const phaseHandler = async (context) => {
     if (context.flightObject.phase === 9) {
@@ -39,11 +40,16 @@ const phaseHandler = async (context) => {
         console.log('Creating a new flight model...')
         movingFlight = new flightModel(movingFlightObject)
         await movingFlight.save()
+        isNewFlight = true
     } else
         movingFlight = await flightModel.findById(context.flightObject.flightId)
 
     // Attaching the movingFlight Id to the context
     context.flightObject.flightId = movingFlight._id + ''
+    if (isNewFlight) {
+        parentPort.postMessage({ action: 'newFlight', payload: context })
+        isNewFlight = false
+    }
 
     // Ensuring current leg is free to mount
     currentLeg = await legModel.findOne({

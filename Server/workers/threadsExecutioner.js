@@ -32,6 +32,8 @@ let occupiedPhases = []
 
 // Workers Reducer
 const reducer = async ({ action, payload }) => {
+    parentPort.postMessage({ action, payload })
+
     if (action === 'insertFlightToQueue') {
         console.log(
             `Adding flight ${payload.flightObject.flightId} to flights-queue`

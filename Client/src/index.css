@@ -65,6 +65,15 @@ section{
   transition: all 0.3s ease-in-out;
 }
 
+ul {
+  padding: 0;
+  margin: 10px 10px;
+  
+  list-style: none;
+}
+
+section ul li.flight {border: 1px solid gray;}
+
 section:hover
 {
   border-radius: 10px;
