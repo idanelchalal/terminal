@@ -56,6 +56,7 @@ const reducer = async ({ action, payload }) => {
         leg.currentFlight = null
         await leg.save()
         totalFlights--
+        parentPort.postMessage({ action: 'flightCompleted', payload })
     }
 
     if (action === 'occupyPhase') {

@@ -1,9 +1,10 @@
-const { Worker, parentPort } = require('worker_threads')
+const { parentPort } = require('worker_threads')
 const legModel = require('../dal/Models/Leg')
 const flightModel = require('../dal/Models/Flight')
 const { loggerIn, loggerOut } = require('../util/logger')
 const config = require('../config')
 const mongoConnect = require('../dal/dal')
+// DAL ACCESS
 mongoConnect(config.connectionString)
 
 let currentLeg
