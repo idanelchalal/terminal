@@ -24,8 +24,7 @@ const flightObject = {
 }
 
 // MEMORY VARIABLES
-const MAX_FLIGHTS = 4
-let totalFlights = 0
+
 let flightsQueue = []
 const threadPool = []
 let occupiedPhases = []
@@ -57,7 +56,6 @@ const reducer = async ({ action, payload }) => {
         })
         leg.currentFlight = null
         await leg.save()
-        totalFlights--
         parentPort.postMessage({ action: 'flightCompleted', payload })
     }
 
@@ -144,9 +142,9 @@ const reducer = async ({ action, payload }) => {
 }
 
 const workerFactory = (context) => {
-    if (totalFlights > MAX_FLIGHTS) {
-        parentPort.postMessage({ status: 500, message: 'FLIGHTS_OVERFLOW' })
-    }
+    // if (totalFlights > MAX_FLIGHTS) {
+    //     parentPort.postMessage({ action: 'FLIGHTS_OVERFLOW' })
+    // }
 
     const pathPrefix = __dirname + '/'
     const workerIndex =
@@ -160,5 +158,4 @@ const workerFactory = (context) => {
 // WHEN A NEW REQUEST IS INCOMING
 parentPort.on('message', async (context) => {
     workerFactory({ ...flightObject, settings: context })
-    totalFlights++
 })

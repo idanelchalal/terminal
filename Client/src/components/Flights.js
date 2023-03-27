@@ -6,7 +6,6 @@ const Flights = () => {
     const [flights, setFlights] = useState([])
     const [completed, setCompleted] = useState([])
     const [socket, setSocket] = useState()
-
     const flightCompleted = (payload) => {
         setFlights((lastSnap) => {
             const newArr = lastSnap.filter(
@@ -45,9 +44,8 @@ const Flights = () => {
         const newSocket = io('http://localhost:3001')
         setSocket(newSocket)
         newSocket.on('flightCompleted', (payload) => flightCompleted(payload))
-        newSocket.on('newFlight', (payload) => newFlight(payload))
         newSocket.on('occupyPhase', (payload) => filterFlights(payload))
-
+        newSocket.on('connect', () => newSocket.emit('getData'))
         return () => {
             newSocket.close()
         }
