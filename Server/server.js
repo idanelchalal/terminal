@@ -36,7 +36,9 @@ server.listen(config.PORT, () => {
     io.on('connection', (socket) => {
         console.log('CONNECTED IO TO CLIENT')
         socketIO = socket
-        worker.on('message', (reducer) => socketIO.emit('message', reducer))
+    })
+    worker.on('message', (reducer) => {
+        socketIO.emit(reducer.action, reducer.payload)
     })
 
     io.on('disconnect', () => {
